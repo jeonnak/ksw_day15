@@ -55,13 +55,32 @@ def add_data(pokemon):
     pokemons.append(None)
     pokemons[len(pokemons)-1] = pokemon
 
+pokemons = []
+select = -1  #
 
 if __name__ == "__main__":
-    pokemons = ["피카츄", "라이츄", "꼬부기", "파이리", "이상해"]
-    print(pokemons)
-    delete_data(3)
-    print(pokemons)
-    delete_data(1)
-    print(pokemons)
-    add_data('터검니')
-    print(pokemons)
+
+    while select != 4:
+
+        select = int(input("선택하세요(1: 추가, 2: 삽입, 3: 삭제, 4: 종료)--> "))
+
+        if select == 1:
+            data = input("추가할 데이터--> ")
+            add_data(data)
+            print(pokemons)
+        elif select == 2:
+            pos = int(input("삽입할 위치--> "))
+            data = input("추가할 데이터--> ")
+            insert_data(pos, data)
+            print(pokemons)
+        elif select == 3:
+            pos = int(input("삭제할 위치--> "))
+            delete_data(pos)
+            print(pokemons)
+        elif select == 4:
+            print(pokemons)
+            # exit()  #exit은 프로그램을 종료하고 break는 가까운 if문을 탈출하는 것.
+            break #exit도 괜찮은데 이 예제에선 break도 괜찮습니다.
+        else:
+            print("1~4 중 하나를 입력하세요.")
+            continue
