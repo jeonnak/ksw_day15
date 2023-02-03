@@ -45,10 +45,23 @@ def delete_data(idx):
     for i in range(len_pokemons - idx): # 맨 뒤 거부터 idx 뒤까지 삭제해준다는 말임.
         pokemons.pop()
 
+# add_data를 만듦.
+def add_data(pokemon):
+    """
+    선형 리스트의 맨 뒤에 원소 삽입
+    :param pokemon: str
+    :return: void
+    """
+    pokemons.append(None)
+    pokemons[len(pokemons)-1] = pokemon
+
+
 if __name__ == "__main__":
     pokemons = ["피카츄", "라이츄", "꼬부기", "파이리", "이상해"]
     print(pokemons)
     delete_data(3)
     print(pokemons)
     delete_data(1)
+    print(pokemons)
+    add_data('터검니')
     print(pokemons)
