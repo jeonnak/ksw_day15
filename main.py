@@ -1,86 +1,55 @@
-def insert_data(idx, pokemon):
+## 함수 선언 부분 ##
+# 다항식 형식을 출력해보겠습니다.
+# 매개변수 px는 다항식 계수 배열
+def print_poly(px):
     """
-    선형 리스트의 idx위치에 원소 삽입
-    :param idx: int
-    :param pokemon: str
-    :return: void
+    다항식을 포맷에 맞게 출력하는 함수
+    :param px: 계수를 원소로 가지고 있는 list
+    :return: 다항식 문자열
     """
-    if idx < 0 or idx > len(pokemons):  # 범위 지정
-        print("Out of range!")
-        return
+    term = len(px) - 1  # 최고차항 숫자 = 배열길이-1
+    poly_str = "P(x) = "
 
-    pokemons.append(None)  # .append() poketmons 끝에 빈칸을 추가합니다.
+    for i in range(len(px)):
+        coef = px[i]  # 계수를 추출합니다.
 
-    for i in range(len(pokemons) - 1, idx, -1):  # len(pokemons) - 1은 마지막 인덱스를 뜻합니다. 배열 전체 길이는 0부터 세지 않기 때문에 -1을 빼주는 겁니다.
-                                                # 삽입할 위치 idx까지 인덱스 1씩 감소시키면서 다음 for문을 반복합니다.
-        pokemons[i] = pokemons[i - 1]           # 마지막 자리에 그 앞에 있는 데이터를 할당합니다.
-        pokemons[i - 1] = None                  # 그러면 같은 데이터가 중복이 되는데 마지막 인덱스에는 데이터를 남기고 그 전 인덱스에 빈칸을 두고 계속 이런식으로 빈칸의 위치를 옮깁니다.
-
-    pokemons[idx] = pokemon     # idx 위치에 pokemon 값을 할당합니다.
-
-
-# self study 3-1 입력한 위치 이후가 모두 삭제
-def delete_data(idx):
-    """
-    선형 리스트 idx 위치의 원소 삭제
-    :param idx: int
-    :return: void
-    """
-    if idx < 0 or idx > len(pokemons):  # 범위 지정
-        print("Out of range!")
-        return
-
-    len_pokemons = len(pokemons)
-    pokemons[idx] = None  # 삭제할 위치의 데이터를 삭제합니다.
-
-
-    #1 for문 이용해서 이렇게 옮겨줘서 값 없애주기
-    for i in range(idx + 1, len_pokemons):  # 삭제할 인덱스의 다음 인덱스에서부터 마지막 인덱스까지 None으로 비워줄 겁니다.
-        # del (pokemons[i])
-        # 길이는 줄어드는데 i가 계속 증가하니까 에러 발생
-        pokemons[i - 1] = pokemons[i]
-        pokemons[i] = None
-
-    #2 .pop()으로 간단하게 나타냄. pop은 인덱스 값을 주지 않으면 맨 뒤 거를 삭제함.
-    for i in range(len_pokemons - idx): # 맨 뒤 거부터 idx 뒤까지 삭제해준다는 말임.
-        pokemons.pop()
-
-# add_data를 만듦.
-def add_data(pokemon):
-    """
-    선형 리스트의 맨 뒤에 원소 삽입
-    :param pokemon: str
-    :return: void
-    """
-    pokemons.append(None)
-    pokemons[len(pokemons)-1] = pokemon
-
-pokemons = []
-menu = -1
-
-if __name__ == "__main__":
-
-    while True:
-
-        menu = int(input("1: 추가, 2: 삽입, 3: 삭제, 4: 종료--> "))
-
-        if menu == 1:
-            data = input("추가할 데이터--> ")
-            add_data(data)
-            print(pokemons)
-        elif menu == 2:
-            idx = int(input("삽입할 위치--> "))
-            data = input("추가할 데이터--> ")
-            insert_data(idx, data)
-            print(pokemons)
-        elif menu == 3:
-            idx = int(input("삭제할 위치--> "))
-            delete_data(idx)
-            print(pokemons)
-        elif menu == 4:
-            print(pokemons)
-            # exit()  #exit은 프로그램을 종료하고 break는 가까운 if문을 탈출하는 것.
-            break #exit도 괜찮은데 이 예제에선 break도 괜찮습니다.
-        else:
-            print("menu에서 고르세요")
+        if i > 0 and coef > 0:  #  첫번째 항이니까 얘를 스킵하기 위함. 그리고 계수가 0보다 커야함.
+            poly_str = poly_str + "+"
+        elif coef == 0:  # 계수가 0이라면 차수하나 감소해서 문자열로 만들어주는 겁니다.
+            term = term - 1  # 항의 차수를 1 감소합니다.
             continue
+
+        poly_str = poly_str + f'{coef}x^{term} '
+        term = term - 1
+
+    return poly_str  # 생성된 다항식 문자열 반환합니다.
+
+
+def calc_poly(x_val, p_x):
+    """
+    다항식의 산술연산을 계산하는 함수
+    :param x_val: x값 integer
+    :param p_x: 계수를 원소로 가지고 있는 list
+    :return: 다항식 계산 결과 값 integer
+    """
+    return_val = 0
+    term = len(p_x) - 1  # 최고차항 숫자 = 배열길이-1
+
+    for i in range(len(px)):
+        coef = p_x[i]  # 계수
+        return_val = return_val + coef * x_val ** term
+        term -= 1
+
+    return return_val
+
+
+## 전역 변수 선언 부분 ##
+px = [3, -4, 0, 6]  # = 7x^3 -4x^2 +0x^1 +5x^0
+
+## 메인 코드 부분 ##
+if __name__ == "__main__":
+    print(print_poly(px))
+
+    x_value = int(input("X 값 : "))
+    print(calc_poly(x_value, px))
+
